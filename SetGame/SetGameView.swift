@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct SetGameView: View {
+    var game = SetGame()
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -20,5 +21,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    SetGameView()
 }
