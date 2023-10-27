@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+@Observable class GameViewModel {
+    //MARK: - Properties
+    private var game = GameModel()
+    
+    //MARK: - Model Access
+    var cards: [Card] {
+        game.deck
+    }
+}

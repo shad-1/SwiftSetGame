@@ -10,7 +10,7 @@ import SwiftUI
 struct Diamond: Shape {
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
-        let width = rect.width * Const.scaleFactor / 2
+        let width = rect.width * ShapeConstants.scaleFactor / 2
         let height = width / 2
         let left = CGPoint(x: center.x - width, y: center.y)
         let right = CGPoint(x: center.x + width, y: center.y)
@@ -23,10 +23,6 @@ struct Diamond: Shape {
         p.addLine(to: left)
         p.addLine(to: top)
         return p
-    }
-    
-    private struct Const {
-        static let scaleFactor = 0.7
     }
 }
 
