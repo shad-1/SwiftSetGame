@@ -17,9 +17,9 @@ struct SetGame{
         deck = []
         visibleCards = []
         
-        deck.append(Card(shape: .diamond(UIShape.circle as! any Shape), color: .red(display: .red)))
-        deck.append(Card(shape: .diamond(UIShape.circle as! any Shape), color: .red(display: .red)))
-        deck.append(Card(shape: .diamond(UIShape.circle as! any Shape), color: .blue(display: .blue)))
+        deck.append(Card(shape: .diamond(Diamond()), color: .red(display: .red)))
+        deck.append(Card(shape: .diamond(Diamond()), color: .red(display: .red)))
+        deck.append(Card(shape: .diamond(Diamond()), color: .blue(display: .blue)))
         
         let uniqueColors = deck.reduce(into: Set()) { colors, card in
             colors.insert(card.color)
