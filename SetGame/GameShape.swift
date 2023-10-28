@@ -10,14 +10,14 @@ import SwiftUI
 struct GameShape: View {
     var card: Card
     var body: some View {
-        ForEach(0..<card.number.rawValue, id:\.self) { _ in
-            ZStack {
-                card.shape.UIShape
-                    .stroke()
-                    .foregroundColor(card.color.UIColor)
-                card.shape.UIShape
-                    .foregroundColor(card.color.UIColor)
-                    .opacity(card.shading.opacity)
+        VStack {
+                ZStack {
+                    card.shape.UIShape
+                        .stroke(lineWidth: 6.0)
+                        .foregroundColor(card.color.UIColor)
+                    card.shape.UIShape
+                        .foregroundColor(card.color.UIColor)
+                        .opacity(card.shading.opacity)
             }
         }
     }

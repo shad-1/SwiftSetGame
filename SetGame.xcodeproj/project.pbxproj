@@ -18,6 +18,7 @@
 		73834F722AEC52F100CDD4F3 /* Oval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F712AEC52F100CDD4F3 /* Oval.swift */; };
 		73834F742AEC5B6D00CDD4F3 /* ShapeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F732AEC5B6D00CDD4F3 /* ShapeConstants.swift */; };
 		73834F762AEC5BC900CDD4F3 /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F752AEC5BC900CDD4F3 /* Squiggle.swift */; };
+		73834F782AECA19E00CDD4F3 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F772AECA19E00CDD4F3 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		73834F712AEC52F100CDD4F3 /* Oval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oval.swift; sourceTree = "<group>"; };
 		73834F732AEC5B6D00CDD4F3 /* ShapeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeConstants.swift; sourceTree = "<group>"; };
 		73834F752AEC5BC900CDD4F3 /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
+		73834F772AECA19E00CDD4F3 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				73834F682AE740C800CDD4F3 /* Shapes */,
 				73834F6F2AEC4DE600CDD4F3 /* GameShape.swift */,
+				73834F772AECA19E00CDD4F3 /* CardView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				73834F592AE7407500CDD4F3 /* SetGameView.swift in Sources */,
 				73834F702AEC4DE600CDD4F3 /* GameShape.swift in Sources */,
 				73834F762AEC5BC900CDD4F3 /* Squiggle.swift in Sources */,
+				73834F782AECA19E00CDD4F3 /* CardView.swift in Sources */,
 				73834F722AEC52F100CDD4F3 /* Oval.swift in Sources */,
 				73834F6A2AE80CAC00CDD4F3 /* GameModel.swift in Sources */,
 				73834F742AEC5B6D00CDD4F3 /* ShapeConstants.swift in Sources */,

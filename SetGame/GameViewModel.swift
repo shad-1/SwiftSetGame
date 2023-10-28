@@ -13,6 +13,6 @@ import Foundation
     
     //MARK: - Model Access
     var cards: [Card] {
-        game.deck
+        game.visibleCards
     }
 }

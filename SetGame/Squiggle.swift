@@ -32,12 +32,13 @@ struct Squiggle: Shape {
             dy: rect.minY - path.boundingRect.minY
         )
 
-        let scale = rect.height / path.boundingRect.height
+        // Scale down to fit within card
+        let scale = rect.width / path.boundingRect.width * ShapeConstants.scaleFactor
         let transform = CGAffineTransform(scaleX: scale, y: scale)
 
         path = path.applying(transform)
-
-        return path.offsetBy(dx: (rect.width - path.boundingRect.width) / 2, dy: 0)
+        // Centering
+        return path.offsetBy(dx: (rect.width - path.boundingRect.width) / 2, dy: (rect.height - path.boundingRect.height) / 2)
     }
 }
 

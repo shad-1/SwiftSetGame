@@ -10,13 +10,26 @@ import SwiftUI
 struct SetGameView: View {
     var game = GameViewModel()
     var body: some View {
-        VStack {
-            ForEach(game.cards) { card in
-                GameShape(card: card)
-            }
+        GeometryReader { geometry in
+            LazyVGrid(columns: columns(for: geometry.size)) {
+                ForEach(game.cards) { card in
+                    CardView(card: card)
+                }
+            }.padding()
         }
-        .padding()
     }
+    
+    private func columns(for screenSize: CGSize) -> [GridItem] {
+        Array(repeating: GridItem(.flexible()),
+              count: Int(min(screenSize.width, screenSize.height)
+                         / Constants.minCardWidth
+              )
+        )
+    }
+}
+
+private struct Constants {
+    static let minCardWidth = 125.0
 }
 
 #Preview {

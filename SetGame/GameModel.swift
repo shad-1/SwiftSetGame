@@ -9,25 +9,46 @@ import Foundation
 import SwiftUI
 
 struct GameModel{
-    var deck: [Card]
-    var visibleCards: [Card]
+    var deck: [Card] = []
+    var visibleCards: [Card] = []
     
+    private func buildDeck() -> [Card] {
+        var cards: [Card] = []
+        for shape in SetShape.allCases {
+            for color in SetColor.allCases {
+                for shading in SetShading.allCases {
+                    for num in SetNumber.allCases {
+                        cards.append(Card(shape: shape, color: color, shading: shading, number: num))
+                    }
+                }
+            }
+        }
+        return cards
+    }
+    
+    private func shuffle(_ cards: [Card]) -> [Card] {
+        var cards = cards
+        for _ in 0...Int.random(in: 2...10) {
+            cards = cards.shuffled()
+        }
+        return cards
+    }
+    
+    private mutating func dealCards() {
+        while visibleCards.count < 12 {
+            visibleCards.append(deck.removeFirst())
+        }
+    }
     
     init() {
-        deck = []
-        visibleCards = []
+        deck = buildDeck()
+        deck = shuffle(deck)
+        dealCards()
+//        let uniqueColors = deck.reduce(into: Set()) { colors, card in
+//            colors.insert(card.color)
+//        }
+                
         
-        deck.append(Card(shape: .diamond, color: .red, shading: .solid, number: .one))
-        deck.append(Card(shape: .oval, color: .blue, shading: .striped, number: .two))
-        deck.append(Card(shape: .squiggle, color: .green, shading: .open, number: .three))
-        
-        let uniqueColors = deck.reduce(into: Set()) { colors, card in
-            colors.insert(card.color)
-        }
-        
-        print(uniqueColors.count)
-        
-        deck.shuffle()
     }
     
     mutating func choose(_ card: Card) {
@@ -44,7 +65,7 @@ struct Card: Identifiable {
     var number: SetNumber
 }
 
-enum SetShading {
+enum SetShading: CaseIterable {
     case solid
     case striped
     case open
@@ -54,20 +75,20 @@ enum SetShading {
         case .solid:
             return 1.0
         case .striped:
-            return 0.4
+            return 0.3
         case .open:
             return 0.0
         }
     }
 }
 
-enum SetNumber: Int {
+enum SetNumber: Int, CaseIterable {
     case one = 1
     case two = 2
     case three = 3
 }
 
-enum SetShape {
+enum SetShape: CaseIterable {
     case diamond
     case oval
     case squiggle
@@ -84,7 +105,7 @@ enum SetShape {
     }
 }
 
-enum SetColor: Hashable {
+enum SetColor: CaseIterable {
     case red
     case green
     case blue
