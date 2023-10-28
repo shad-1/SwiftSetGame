@@ -44,11 +44,60 @@ struct GameModel{
         deck = buildDeck()
         deck = shuffle(deck)
         dealCards()
-//        let uniqueColors = deck.reduce(into: Set()) { colors, card in
-//            colors.insert(card.color)
-//        }
-                
-        
+        checkForValidSetOnScreen()
+    }
+    
+    // Returns a dictionary of {value:count} for all of the properties on all of the cards provided
+    private func getValueCounts(for cards: [Card]) -> [String: Int] {
+        var valueCounts: [String: Int] = [:]
+        for card in cards {
+            // Use Reflection to pull all the properties off each card instance
+            Mirror(reflecting: card).children.forEach { prop in
+                // Don't track unique ID's.
+                if prop.label != "id" {
+                    let propertyValue = String(describing: prop.value)
+                    if let currentCount = valueCounts[propertyValue] {
+                        valueCounts[propertyValue] = currentCount + 1
+                    } else {
+                        valueCounts[propertyValue] = 1
+                    }
+                }
+            }
+        }
+        return valueCounts
+    }
+    
+    private func isValidSet(among cards: [Card], using countingFunction: ([Card]) -> [String:Int]) -> Bool {
+        let counts = countingFunction(cards)
+        if counts.values.contains(where: { $0 == 2 }) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    
+    func checkForValidSetOnScreen() {
+        if checkAllGroupsOf3(among: visibleCards) {
+            print ("valid set found")
+        } else {
+            print ("no valid sets found")
+        }
+    }
+
+    // Loop through all possible 3-card combinations in the provided list to check for valid sets. Returns early to reduce average case time complexity.
+    func checkAllGroupsOf3(among cards: [Card]) -> Bool {
+        for card1 in cards {
+            for card2 in cards.filter({ $0.id != card1.id }) {
+                for card3 in cards.filter({ $0.id != card2.id }) {
+                    let groupToCheck = [card1, card2, card3]
+                    if isValidSet(among: groupToCheck, using: getValueCounts) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
     
     mutating func choose(_ card: Card) {
