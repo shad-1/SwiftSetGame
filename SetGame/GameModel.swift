@@ -9,9 +9,12 @@ import Foundation
 import SwiftUI
 
 struct GameModel{
+    //MARK: - Properties
     var deck: [Card] = []
     var visibleCards: [Card] = []
+    var selectedCards: [Card] = []
     
+    //MARK: - Game Setup
     private func buildDeck() -> [Card] {
         var cards: [Card] = []
         for shape in SetShape.allCases {
@@ -44,9 +47,9 @@ struct GameModel{
         deck = buildDeck()
         deck = shuffle(deck)
         dealCards()
-        checkForValidSetOnScreen()
     }
     
+    //MARK: - Validation Functions
     // Returns a dictionary of {value:count} for all of the properties on all of the cards provided
     private func getValueCounts(for cards: [Card]) -> [String: Int] {
         var valueCounts: [String: Int] = [:]
@@ -76,13 +79,8 @@ struct GameModel{
         }
     }
     
-    
-    func checkForValidSetOnScreen() {
-        if checkAllGroupsOf3(among: visibleCards) {
-            print ("valid set found")
-        } else {
-            print ("no valid sets found")
-        }
+    func checkForValidSetOnScreen() -> Bool {
+        checkAllGroupsOf3(among: visibleCards)
     }
 
     // Loop through all possible 3-card combinations in the provided list to check for valid sets. Returns early to reduce average case time complexity.
@@ -100,74 +98,50 @@ struct GameModel{
         return false
     }
     
+    let idComparer = { (_ card1: Card, _ card2: Card) in
+        card1.id == card2.id
+    }
+    
+    //MARK: - User Intent
     mutating func choose(_ card: Card) {
-        
-    }
-}
-
-struct Card: Identifiable {
-    //MARK: - Properties
-    var id = UUID()
-    var shape: SetShape
-    var color: SetColor
-    var shading: SetShading
-    var number: SetNumber
-}
-
-enum SetShading: CaseIterable {
-    case solid
-    case striped
-    case open
-    
-    var opacity: Double {
-        switch self {
-        case .solid:
-            return 1.0
-        case .striped:
-            return 0.3
-        case .open:
-            return 0.0
+        if selectedCards.count == 3 {
+            if checkAllGroupsOf3(among: selectedCards) {
+                print("you have selected a valid set!")
+                for card in selectedCards {
+                    guard let index = visibleCards.firstIndex(where:{ $0.id != card.id }) else {
+                        return
+                    }
+                    visibleCards[index] = deck.removeFirst()
+                    
+                    }
+                // refill visibleCards
+                // check for match on screen
+            } else {
+                print("nope.")
+                //todo: automatically deselect
+            }
+        } else {
+            selectedCards.append(card)
         }
+        //Case: automatically clear cards on match
+//        if let foundIndex = selectedCards.firstIndex(where:{ $0.id == card.id }) {
+//            selectedCards.remove(at: foundIndex)
+//        } else {
+//            selectedCards.append(card)
+//            if selectedCards.count == 3 {
+//                if checkAllGroupsOf3(among: selectedCards) {
+//                    print("you have selected a valid set!")
+//                    //todo: set of cards
+//                    // refill visibleCards
+//                    // check for match on screen
+//                } else {
+//                    print("nope.")
+//                    //todo: automatically deselect
+//                }
+//            }
+//        }
     }
 }
 
-enum SetNumber: Int, CaseIterable {
-    case one = 1
-    case two = 2
-    case three = 3
-}
 
-enum SetShape: CaseIterable {
-    case diamond
-    case oval
-    case squiggle
-    
-    var UIShape: AnyShape {
-        switch self {
-        case .diamond:
-            return AnyShape(Diamond())
-        case .oval:
-            return AnyShape(Oval())
-        case .squiggle:
-            return AnyShape(Squiggle())
-        }
-    }
-}
-
-enum SetColor: CaseIterable {
-    case red
-    case green
-    case blue
-    
-    var UIColor: Color {
-        switch self {
-        case .red:
-            return Color.red
-        case .green:
-            return Color.green
-        case .blue:
-            return Color.blue
-        }
-    }
-}
 

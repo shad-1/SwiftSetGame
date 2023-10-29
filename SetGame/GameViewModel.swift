@@ -15,4 +15,11 @@ import Foundation
     var cards: [Card] {
         game.visibleCards
     }
+    var selectedCards: [Card] {
+        game.selectedCards
+    }
+    //MARK: - User Intents
+    func choose(card: Card) {
+        game.choose(card)
+    }
 }

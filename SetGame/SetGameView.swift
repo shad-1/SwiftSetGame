@@ -13,7 +13,17 @@ struct SetGameView: View {
         GeometryReader { geometry in
             LazyVGrid(columns: columns(for: geometry.size)) {
                 ForEach(game.cards) { card in
-                    CardView(card: card)
+                    if game.selectedCards.contains(where: { $0.id == card.id }) {
+                        CardView(card: card)
+                            .onTapGesture {
+                                game.choose(card: card)
+                            }.background(.thickMaterial)
+                    } else {
+                        CardView(card: card)
+                            .onTapGesture {
+                                game.choose(card: card)
+                            }
+                    }
                 }
             }.padding()
         }

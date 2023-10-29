@@ -19,6 +19,8 @@
 		73834F742AEC5B6D00CDD4F3 /* ShapeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F732AEC5B6D00CDD4F3 /* ShapeConstants.swift */; };
 		73834F762AEC5BC900CDD4F3 /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F752AEC5BC900CDD4F3 /* Squiggle.swift */; };
 		73834F782AECA19E00CDD4F3 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F772AECA19E00CDD4F3 /* CardView.swift */; };
+		73834F7A2AED985900CDD4F3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F792AED985900CDD4F3 /* Card.swift */; };
+		73834F7E2AED989B00CDD4F3 /* SetCardEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73834F7D2AED989B00CDD4F3 /* SetCardEnums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		73834F732AEC5B6D00CDD4F3 /* ShapeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeConstants.swift; sourceTree = "<group>"; };
 		73834F752AEC5BC900CDD4F3 /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 		73834F772AECA19E00CDD4F3 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		73834F792AED985900CDD4F3 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		73834F7D2AED989B00CDD4F3 /* SetCardEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardEnums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,7 @@
 		73834F652AE740A700CDD4F3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				73834F7B2AED987100CDD4F3 /* Models */,
 				73834F692AE80CAC00CDD4F3 /* GameModel.swift */,
 			);
 			name = Model;
@@ -129,6 +134,15 @@
 				73834F752AEC5BC900CDD4F3 /* Squiggle.swift */,
 			);
 			name = Shapes;
+			sourceTree = "<group>";
+		};
+		73834F7B2AED987100CDD4F3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				73834F792AED985900CDD4F3 /* Card.swift */,
+				73834F7D2AED989B00CDD4F3 /* SetCardEnums.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,10 +221,12 @@
 				73834F762AEC5BC900CDD4F3 /* Squiggle.swift in Sources */,
 				73834F782AECA19E00CDD4F3 /* CardView.swift in Sources */,
 				73834F722AEC52F100CDD4F3 /* Oval.swift in Sources */,
+				73834F7E2AED989B00CDD4F3 /* SetCardEnums.swift in Sources */,
 				73834F6A2AE80CAC00CDD4F3 /* GameModel.swift in Sources */,
 				73834F742AEC5B6D00CDD4F3 /* ShapeConstants.swift in Sources */,
 				73834F6E2AEC018700CDD4F3 /* GameViewModel.swift in Sources */,
 				73834F572AE7407500CDD4F3 /* SetGameApp.swift in Sources */,
+				73834F7A2AED985900CDD4F3 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
