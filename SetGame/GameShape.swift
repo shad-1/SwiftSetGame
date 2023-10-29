@@ -13,7 +13,7 @@ struct GameShape: View {
         VStack {
                 ZStack {
                     card.shape.UIShape
-                        .stroke(lineWidth: 6.0)
+                        .stroke(lineWidth: 4.0)
                         .foregroundColor(card.color.UIColor)
                     card.shape.UIShape
                         .foregroundColor(card.color.UIColor)

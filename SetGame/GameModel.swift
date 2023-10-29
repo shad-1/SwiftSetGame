@@ -13,6 +13,8 @@ struct GameModel{
     var deck: [Card] = []
     var visibleCards: [Card] = []
     var selectedCards: [Card] = []
+    var isValidSetOnScreen: Bool = false
+    var hintValidSet: [Card] = []
     
     //MARK: - Game Setup
     private func buildDeck() -> [Card] {
@@ -29,6 +31,7 @@ struct GameModel{
         return cards
     }
     
+    //Shuffle the deck a random number of times--just for good measure
     private func shuffle(_ cards: [Card]) -> [Card] {
         var cards = cards
         for _ in 0...Int.random(in: 2...10) {
@@ -37,16 +40,17 @@ struct GameModel{
         return cards
     }
     
-    private mutating func dealCards() {
+    mutating func dealCards() {
         while visibleCards.count < 12 {
             visibleCards.append(deck.removeFirst())
         }
+        isValidSetOnScreen = checkForValidSetOnScreen()
     }
     
     init() {
         deck = buildDeck()
         deck = shuffle(deck)
-        dealCards()
+        isValidSetOnScreen = checkForValidSetOnScreen()
     }
     
     //MARK: - Validation Functions
@@ -79,17 +83,18 @@ struct GameModel{
         }
     }
     
-    func checkForValidSetOnScreen() -> Bool {
+    mutating func checkForValidSetOnScreen() -> Bool {
         checkAllGroupsOf3(among: visibleCards)
     }
 
     // Loop through all possible 3-card combinations in the provided list to check for valid sets. Returns early to reduce average case time complexity.
-    func checkAllGroupsOf3(among cards: [Card]) -> Bool {
+    mutating func checkAllGroupsOf3(among cards: [Card]) -> Bool {
         for card1 in cards {
             for card2 in cards.filter({ $0.id != card1.id }) {
                 for card3 in cards.filter({ $0.id != card2.id }) {
                     let groupToCheck = [card1, card2, card3]
                     if isValidSet(among: groupToCheck, using: getValueCounts) {
+                        hintValidSet = groupToCheck
                         return true
                     }
                 }
@@ -104,42 +109,36 @@ struct GameModel{
     
     //MARK: - User Intent
     mutating func choose(_ card: Card) {
-        if selectedCards.count == 3 {
-            if checkAllGroupsOf3(among: selectedCards) {
-                print("you have selected a valid set!")
-                for card in selectedCards {
-                    guard let index = visibleCards.firstIndex(where:{ $0.id != card.id }) else {
-                        return
-                    }
-                    visibleCards[index] = deck.removeFirst()
-                    
-                    }
-                // refill visibleCards
-                // check for match on screen
-            } else {
-                print("nope.")
-                //todo: automatically deselect
-            }
+        // De-select card if already selected
+        if let foundIndex = selectedCards.firstIndex(where:{ $0.id == card.id }) {
+            selectedCards.remove(at: foundIndex)
         } else {
             selectedCards.append(card)
+            // Check for match if 3 cards are selected
+            if selectedCards.count == 3 {
+                if checkAllGroupsOf3(among: selectedCards) {
+                    for selectedCard in selectedCards {
+                        guard let index = visibleCards.firstIndex(where:{ $0.id == selectedCard.id }) else {
+                            return
+                        }
+                        visibleCards.remove(at: index)
+                        }
+                    dealThreeCards()
+                }
+                selectedCards = []
+            }
         }
-        //Case: automatically clear cards on match
-//        if let foundIndex = selectedCards.firstIndex(where:{ $0.id == card.id }) {
-//            selectedCards.remove(at: foundIndex)
-//        } else {
-//            selectedCards.append(card)
-//            if selectedCards.count == 3 {
-//                if checkAllGroupsOf3(among: selectedCards) {
-//                    print("you have selected a valid set!")
-//                    //todo: set of cards
-//                    // refill visibleCards
-//                    // check for match on screen
-//                } else {
-//                    print("nope.")
-//                    //todo: automatically deselect
-//                }
-//            }
-//        }
+    }
+    
+    mutating func dealThreeCards() {
+        if !isValidSetOnScreen || visibleCards.count < 12 {
+            for _ in 0..<3 {
+                if !deck.isEmpty {
+                    visibleCards.append(deck.removeFirst())
+                }
+            }
+        isValidSetOnScreen = checkForValidSetOnScreen()
+        }
     }
 }
 
